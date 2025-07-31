@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline';">
+    <title>HTTP Media Access Browser Launcher</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 HTTP Media Launcher</h1>
+            <p class="subtitle">Launch browsers with camera & microphone access for HTTP sites</p>
+            <div class="app-info">
+                <span id="platformInfo"></span> • <span id="appVersion"></span>
+            </div>
+        </div>
+        
+        <div class="warning">
+            <div class="warning-icon">⚠️</div>
+            <div>
+                <strong>Security Warning:</strong> This tool uses browser flags that disable security features to allow camera/microphone access on HTTP sites. Use only for development and testing purposes.
+            </div>
+        </div>
+
+        <form id="launcherForm">
+            <div class="form-group">
+                <label for="url">📍 HTTP Site URL:</label>
+                <input type="url" id="url" name="url" placeholder="http://localhost:3000" required>
+                <div class="url-suggestions">
+                    <button type="button" class="suggestion-btn" data-url="http://localhost:3000">localhost:3000</button>
+                    <button type="button" class="suggestion-btn" data-url="http://localhost:8080">localhost:8080</button>
+                    <button type="button" class="suggestion-btn" data-url="http://127.0.0.1:5000">127.0.0.1:5000</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>🌐 Select Browser:</label>
+                <div class="browser-grid" id="browserGrid">
+                    <!-- Browsers will be populated by JavaScript -->
+                </div>
+                <div class="refresh-browsers">
+                    <button type="button" id="refreshBrowsers" class="refresh-btn">🔄 Refresh Browser List</button>
+                </div>
+            </div>
+
+            <div class="launch-section">
+                <button type="submit" class="launch-btn" id="launchBtn">
+                    🚀 Launch Browser
+                </button>
+                <button type="button" class="export-btn" id="exportBtn" style="display: none;">
+                    💾 Save Command
+                </button>
+            </div>
+        </form>
+
+        <div class="success-message" id="successMessage"></div>
+        <div class="error-message" id="errorMessage"></div>
+        
+        <div class="command-section" id="commandSection" style="display: none;">
+            <div class="command-header">
+                <h3>Generated Command</h3>
+                <button class="copy-btn" id="copyBtn">📋 Copy</button>
+            </div>
+            <div class="command-output" id="commandOutput"></div>
+        </div>
+
+        <div class="footer">
+            <div class="footer-links">
+                <button class="link-btn" id="aboutBtn">About</button>
+                <button class="link-btn" id="helpBtn">Help</button>
+                <button class="link-btn" id="githubBtn">GitHub</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Modal -->
+    <div class="modal" id="aboutModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>About HTTP Media Launcher</h2>
+                <button class="close-btn" id="closeAbout">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>HTTP Media Launcher is a cross-platform tool that helps developers launch web browsers with the necessary flags to enable camera and microphone access on HTTP sites.</p>
+                <br>
+                <p><strong>Features:</strong></p>
+                <ul>
+                    <li>Support for Chrome, Brave, Firefox, Edge, Chromium, and Safari</li>
+                    <li>Cross-platform compatibility (Windows, macOS, Linux)</li>
+                    <li>Automatic browser detection</li>
+                    <li>Safe temporary profile creation</li>
+                    <li>Command export functionality</li>
+                </ul>
+                <br>
+                <p><strong>Version:</strong> <span id="modalAppVersion"></span></p>
+                <p><strong>Platform:</strong> <span id="modalPlatformInfo"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div class="modal" id="helpModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Help & Usage</h2>
+                <button class="close-btn" id="closeHelp">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h3>How to Use:</h3>
+                <ol>
+                    <li>Enter the URL of your HTTP site</li>
+                    <li>Select your preferred browser from the grid</li>
+                    <li>Click "Launch Browser" to start the browser with media permissions</li>
+                </ol>
+                
+                <h3>Browser Support:</h3>
+                <ul>
+                    <li><strong>Chrome/Brave/Edge:</strong> Uses Chromium flags for unsafe origins</li>
+                    <li><strong>Firefox:</strong> Creates temporary profile with media permissions</li>
+                    <li><strong>Safari:</strong> Limited options (manual setup may be required)</li>
+                </ul>
+
+                <h3>Security Notes:</h3>
+                <p>This tool temporarily disables certain browser security features. The launched browser instance uses a separate profile to avoid affecting your regular browsing data.</p>
+
+                <h3>Troubleshooting:</h3>
+                <ul>
+                    <li>If a browser shows as "not found", try refreshing the browser list</li>
+                    <li>Make sure the browser is properly installed</li>
+                    <li>Try running the app as administrator (Windows) if browser launch fails</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="renderer.js"></script>
+</body>
+</html>
